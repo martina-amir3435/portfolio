@@ -1,0 +1,763 @@
+!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martina Amir Gerges — Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-deep:      #f5f0e8;
+      --bg-mid:       #ede7d9;
+      --bg-card:      #faf7f2;
+      --accent:       #1a2744;
+      --accent-alt:   #243459;
+      --accent-warm:  #e07b39;
+      --text-primary: #1a2744;
+      --text-sec:     #4a5568;
+      --text-orange:  #c96a25;
+      --border:       rgba(26, 39, 68, 0.14);
+      --glass:        rgba(245, 240, 232, 0.92);
+      --shadow:       rgba(26, 39, 68, 0.1);
+      --radius:       16px;
+      --transition:   0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-mid); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    #cursor-glow {
+      position: fixed;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(224, 123, 57, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section-label {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      color: var(--accent-warm);
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin-bottom: 3rem;
+    }
+    section { padding: 7rem 0; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1rem 0;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: var(--glass);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px var(--shadow); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 900; text-decoration: none; color: var(--text-primary); }
+    .nav-logo span { color: var(--accent-warm); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { color: var(--text-sec); text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 50px; transition: color var(--transition), background var(--transition); position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 2px; left: 50%; right: 50%; height: 2px; background: var(--accent-warm); transition: left 0.3s, right 0.3s; border-radius: 2px; }
+    .nav-links a:hover::after, .nav-links a.active::after { left: 0.9rem; right: 0.9rem; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+    .btn-hire { background: var(--accent); color: var(--bg-deep); font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem; padding: 0.55rem 1.3rem; border-radius: 50px; text-decoration: none; transition: background var(--transition), transform 0.2s, box-shadow 0.2s; white-space: nowrap; }
+    .btn-hire:hover { background: var(--accent-alt); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,39,68,0.2); }
+    .nav-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
+    #hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; background: linear-gradient(160deg, #f5f0e8 55%, #ede3d0 100%); }
+    #hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 450px; height: 450px; border-radius: 50%; background: radial-gradient(circle, rgba(224,123,57,0.14) 0%, transparent 70%); pointer-events: none; }
+    #hero::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 350px; height: 350px; border-radius: 50%; background: radial-gradient(circle, rgba(26,39,68,0.06) 0%, transparent 70%); pointer-events: none; }
+    .hero-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Nunito', sans-serif; font-size: clamp(8rem, 22vw, 20rem); font-weight: 900; color: rgba(26, 39, 68, 0.05); pointer-events: none; user-select: none; letter-spacing: 0.05em; white-space: nowrap; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(26, 39, 68, 0.07); border: 1.5px solid rgba(26, 39, 68, 0.16); color: var(--text-primary); font-size: 0.8rem; font-weight: 700; padding: 0.45rem 1.1rem; border-radius: 50px; margin-bottom: 1.5rem; animation: float-badge 3s ease-in-out infinite; }
+    .hero-badge .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
+    @keyframes float-badge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes pulse-dot { 0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); } 50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); } }
+    .hero-h1 { font-family: 'Nunito', sans-serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 900; line-height: 1.05; color: var(--text-primary); margin-bottom: 1rem; }
+    .hero-h1 .orange { color: var(--accent-warm); display: block; }
+    .hero-tagline { color: var(--text-sec); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2rem; max-width: 480px; }
+    .hero-stats { display: flex; gap: 2rem; margin-bottom: 2.5rem; }
+    .stat-item { text-align: left; }
+    .stat-num { font-family: 'Nunito', sans-serif; font-size: 2rem; font-weight: 900; color: var(--accent); line-height: 1; }
+    .stat-label { font-size: 0.78rem; color: var(--text-sec); font-weight: 500; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--accent); color: var(--bg-deep); font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; padding: 0.85rem 2rem; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: background var(--transition), transform 0.2s, box-shadow 0.2s; }
+    .btn-primary:hover { background: var(--accent-alt); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26, 39, 68, 0.22); }
+    .btn-outline { border: 2px solid var(--accent); color: var(--accent); background: transparent; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2rem; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: border-color var(--transition), background var(--transition), transform 0.2s, color var(--transition); }
+    .btn-outline:hover { background: var(--accent); color: var(--bg-deep); transform: translateY(-2px); }
+    .hero-photo-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+    .photo-ring { width: 320px; height: 320px; border-radius: 50%; padding: 5px; background: linear-gradient(135deg, var(--accent-warm), var(--bg-deep), var(--accent), var(--bg-mid), var(--accent-warm)); background-size: 300% 300%; animation: gradient-spin 4s linear infinite; position: relative; }
+    @keyframes gradient-spin { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    .photo-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--bg-mid); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .photo-inner .fa-user-circle { font-size: 10rem; color: rgba(26, 39, 68, 0.15); }
+    .photo-float-badge { position: absolute; bottom: 30px; right: 0; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 14px; padding: 0.65rem 1.1rem; display: flex; align-items: center; gap: 0.5rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 800; color: var(--text-primary); box-shadow: 0 8px 24px var(--shadow); animation: float-badge 3s ease-in-out infinite 0.5s; }
+    #about { background: var(--bg-deep); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+    .about-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2.5rem; box-shadow: 0 4px 24px var(--shadow); }
+    .about-card p { color: var(--text-sec); margin-bottom: 1.2rem; font-size: 0.98rem; line-height: 1.8; }
+    .about-card p:last-child { margin-bottom: 0; }
+    .about-card p strong { color: var(--text-primary); font-weight: 700; }
+    .chips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .chip { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px; padding: 0.9rem 1rem; font-size: 0.83rem; font-weight: 600; color: var(--text-sec); display: flex; align-items: center; gap: 0.6rem; transition: border-color var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition); box-shadow: 0 2px 8px var(--shadow); }
+    .chip:hover { border-color: var(--accent-warm); color: var(--text-primary); transform: translateY(-2px); box-shadow: 0 6px 20px var(--shadow); }
+    .chip-icon { width: 22px; height: 22px; background: var(--accent); border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; color: var(--bg-deep); font-size: 0.7rem; flex-shrink: 0; }
+    #experience { background: var(--bg-mid); }
+    .timeline { position: relative; padding-left: 2.5rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--accent), rgba(26,39,68,0.1)); border-radius: 2px; }
+    .timeline-item { position: relative; margin-bottom: 3rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -2.7rem; top: 1.2rem; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg-mid); box-shadow: 0 0 0 4px rgba(26,39,68,0.1); }
+    .timeline-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: 0 4px 20px var(--shadow); transition: transform var(--transition), box-shadow var(--transition); cursor: default; }
+    .timeline-card:hover { transform: translateX(6px); box-shadow: -4px 0 0 var(--accent-warm), 0 8px 30px var(--shadow); }
+    .tc-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .tc-company { font-family: 'Nunito', sans-serif; font-size: 1.3rem; font-weight: 900; color: var(--text-primary); }
+    .tc-period { font-size: 0.82rem; color: var(--text-sec); margin-top: 0.2rem; }
+    .badge { font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.85rem; border-radius: 50px; }
+    .badge-green { background: rgba(34, 197, 94, 0.12); color: #16a34a; border: 1px solid rgba(34,197,94,0.3); }
+    .badge-blue  { background: rgba(59, 130, 246, 0.12); color: #2563eb; border: 1px solid rgba(59,130,246,0.3); }
+    .role-block { margin-bottom: 1.5rem; }
+    .role-block:last-child { margin-bottom: 0; }
+    .role-title { font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--accent-warm); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+    .role-title::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-warm); }
+    .role-list { list-style: none; padding-left: 0.5rem; }
+    .role-list li { color: var(--text-sec); font-size: 0.9rem; line-height: 1.75; padding-left: 1rem; position: relative; margin-bottom: 0.3rem; }
+    .role-list li::before { content: '▸'; color: var(--accent-warm); position: absolute; left: 0; }
+    .role-divider { height: 1px; background: var(--border); margin: 1.2rem 0; }
+    #projects { background: var(--bg-deep); }
+    .projects-intro { color: var(--text-sec); font-size: 1rem; line-height: 1.8; max-width: 700px; margin-bottom: 3rem; }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+    .dash-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2.2rem; display: flex; flex-direction: column; box-shadow: 0 4px 20px var(--shadow); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); position: relative; overflow: hidden; }
+    .dash-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent-warm)); border-radius: var(--radius) var(--radius) 0 0; }
+    .dash-card:hover { transform: translateY(-6px); border-color: rgba(224, 123, 57, 0.45); box-shadow: 0 20px 50px rgba(26, 39, 68, 0.14); }
+    .dash-number { font-family: 'Nunito', sans-serif; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-warm); margin-bottom: 0.6rem; }
+    .dash-title { font-family: 'Nunito', sans-serif; font-size: 1.35rem; font-weight: 900; color: var(--text-primary); margin-bottom: 0.4rem; }
+    .dash-purpose-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-top: 1.2rem; margin-bottom: 0.3rem; }
+    .dash-purpose-text { color: var(--text-sec); font-size: 0.9rem; line-height: 1.65; margin-bottom: 1rem; }
+    .dash-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+    .dash-section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem; }
+    .dash-content-list { list-style: none; padding: 0; margin-bottom: 1rem; }
+    .dash-content-list li { font-size: 0.86rem; color: var(--text-sec); line-height: 1.6; padding-left: 1rem; position: relative; margin-bottom: 0.2rem; }
+    .dash-content-list li::before { content: '▸'; color: var(--accent-warm); position: absolute; left: 0; font-size: 0.75rem; }
+    .dash-audience { display: flex; align-items: flex-start; gap: 0.6rem; background: rgba(26, 39, 68, 0.05); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; margin-top: auto; }
+    .dash-audience-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); white-space: nowrap; padding-top: 1px; }
+    .dash-audience-text { font-size: 0.82rem; color: var(--text-sec); line-height: 1.5; }
+    #skills { background: var(--bg-mid); }
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
+    .skill-card-wide { grid-column: 1 / -1; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2.2rem; box-shadow: 0 4px 20px var(--shadow); }
+    .skill-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2.2rem; box-shadow: 0 4px 20px var(--shadow); }
+    .skill-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem; }
+    .skill-card-icon { width: 36px; height: 36px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--bg-deep); font-size: 0.95rem; flex-shrink: 0; }
+    .skill-card-title { font-family: 'Nunito', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--text-primary); }
+    .skill-bars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 2.5rem; }
+    .skill-bar-item { }
+    .skill-bar-top { display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--text-sec); margin-bottom: 0.45rem; font-weight: 500; }
+    .skill-bar-top .pct { font-family: 'Nunito', sans-serif; color: var(--accent); font-weight: 900; font-size: 0.88rem; }
+    .bar-track { height: 8px; background: rgba(26, 39, 68, 0.08); border-radius: 50px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--accent-warm), var(--accent)); width: 0%; transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .tag { background: rgba(26, 39, 68, 0.06); border: 1.5px solid rgba(26, 39, 68, 0.12); color: var(--text-sec); font-size: 0.8rem; font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 50px; transition: color var(--transition), border-color var(--transition), background var(--transition); }
+    .tag:hover { color: var(--text-primary); border-color: var(--accent-warm); background: rgba(224, 123, 57, 0.08); }
+    .soft-skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+    .soft-skill-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.84rem; color: var(--text-sec); font-weight: 500; }
+    .soft-skill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-warm); flex-shrink: 0; }
+    #education { background: var(--bg-deep); }
+    .edu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .edu-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: 0 4px 16px var(--shadow); transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition); }
+    .edu-card:hover { border-color: var(--accent-warm); transform: translateY(-4px); box-shadow: 0 12px 32px var(--shadow); }
+    .edu-icon-box { width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--bg-deep); font-size: 1rem; margin-bottom: 0.9rem; }
+    .edu-degree { font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem; }
+    .edu-inst { font-size: 0.85rem; color: var(--accent-warm); font-weight: 700; margin-bottom: 0.15rem; }
+    .edu-period { font-size: 0.8rem; color: var(--text-sec); margin-bottom: 0.9rem; font-weight: 500; }
+    .edu-bullets { list-style: none; padding: 0; }
+    .edu-bullets li { color: var(--text-sec); font-size: 0.85rem; line-height: 1.6; padding-left: 1rem; position: relative; margin-bottom: 0.25rem; }
+    .edu-bullets li::before { content: '▸'; color: var(--accent-warm); position: absolute; left: 0; }
+    .lang-row { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+    .lang-item { display: flex; align-items: center; gap: 0.8rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 14px; padding: 1rem 1.75rem; box-shadow: 0 4px 16px var(--shadow); transition: transform var(--transition); }
+    .lang-item:hover { transform: translateY(-3px); }
+    .lang-flag { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-mid); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .lang-name { font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 800; color: var(--text-primary); }
+    .lang-level { font-size: 0.78rem; color: var(--text-sec); font-weight: 500; }
+    #contact { background: var(--bg-mid); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; align-items: start; }
+    .contact-heading { font-family: 'Nunito', sans-serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; color: var(--text-primary); line-height: 1.2; margin-bottom: 1rem; }
+    .contact-heading span { color: var(--accent-warm); }
+    .contact-sub { color: var(--text-sec); font-size: 0.95rem; line-height: 1.75; margin-bottom: 2rem; }
+    .contact-info-cards { display: flex; flex-direction: column; gap: 0.85rem; }
+    .contact-info-card { display: flex; align-items: center; gap: 1rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; text-decoration: none; box-shadow: 0 2px 10px var(--shadow); transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition); }
+    .contact-info-card:hover { border-color: var(--accent-warm); transform: translateX(5px); box-shadow: 0 6px 20px var(--shadow); }
+    .contact-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: var(--bg-deep); font-size: 1rem; flex-shrink: 0; }
+    .contact-info-card span { color: var(--text-sec); font-size: 0.9rem; font-weight: 500; }
+    .contact-info-card:hover span { color: var(--text-primary); }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-field label { font-size: 0.8rem; font-weight: 700; color: var(--text-sec); letter-spacing: 0.04em; }
+    .form-field input, .form-field textarea { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 10px; color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; outline: none; transition: border-color var(--transition), box-shadow var(--transition); resize: none; }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(74,85,104,0.45); }
+    .form-field input:focus, .form-field textarea:focus { border-color: var(--accent-warm); box-shadow: 0 0 0 3px rgba(224, 123, 57, 0.1); }
+    .form-field textarea { height: 130px; }
+    .btn-send { background: var(--accent); color: var(--bg-deep); font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; padding: 0.9rem 2rem; border-radius: 50px; border: none; cursor: pointer; transition: background var(--transition), transform 0.2s, box-shadow 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; }
+    .btn-send:hover { background: var(--accent-alt); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26, 39, 68, 0.2); }
+    footer { background: var(--accent); padding: 2.5rem 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--bg-deep); text-decoration: none; }
+    .footer-copy { font-size: 0.82rem; color: rgba(245,240,232,0.65); text-align: center; }
+    .social-links { display: flex; gap: 0.75rem; }
+    .social-link { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid rgba(245,240,232,0.25); display: flex; align-items: center; justify-content: center; color: rgba(245,240,232,0.7); text-decoration: none; transition: color var(--transition), border-color var(--transition), background var(--transition), transform 0.2s; }
+    .social-link:hover { color: var(--accent); border-color: var(--bg-deep); background: var(--bg-deep); transform: translateY(-2px); }
+    @media (max-width: 900px) {
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-photo-wrap { order: -1; }
+      .photo-ring { width: 240px; height: 240px; }
+      .skills-layout { grid-template-columns: 1fr; }
+      .skill-card-wide { grid-column: 1; }
+      .skill-bars-grid { grid-template-columns: 1fr; }
+      .dashboard-grid, .edu-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .btn-hire { display: none; }
+      .nav-toggle { display: block; }
+      .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: var(--glass); padding: 1.5rem; border-bottom: 1px solid var(--border); backdrop-filter: blur(18px); z-index: 999; box-shadow: 0 8px 24px var(--shadow); }
+      .nav-links.open .btn-hire { display: inline-flex; width: fit-content; }
+      .hero-stats { gap: 1.2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      section { padding: 5rem 0; }
+      .lang-row { gap: 1rem; }
+      .chips-grid { grid-template-columns: 1fr; }
+      .soft-skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-glow" style="opacity: 1; left: 491px; top: 278px;"></div>
+
+<nav id="navbar" class="scrolled">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-logo"><span>M</span>artina.</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" class="">About</a></li>
+      <li><a href="#experience" class="">Experience</a></li>
+      <li><a href="#projects" class="">Projects</a></li>
+      <li><a href="#skills" class="">Skills</a></li>
+      <li><a href="#education" class="">Education</a></li>
+      <li><a href="#contact" class="">Contact</a></li>
+      
+      <li><a href="mailto:tinamaro2004@gmail.com" class="btn-hire">Hire Me</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-watermark">DATA</div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal visible">
+        
+        <h1 class="hero-h1">
+          Martina Amir
+          <span class="orange">Gerges</span>
+        </h1>
+        <p class="hero-tagline">
+          Data Analyst &amp; Business Intelligence Specialist.<br>I take "This will take time" and turn it into "Done right on time."</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">1+</div>
+            <div class="stat-label">Years Exp.</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Markets: EG · UAE · KSA</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Tech Tools</div>
+          </div>
+        </div>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-primary"><i class="fas fa-chart-bar"></i> View My Work</a>
+          <a href="#contact" class="btn-outline"><i class="fas fa-envelope"></i> Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap reveal visible" style="transition-delay:0.2s;">
+        <div class="photo-ring">
+          <div class="photo-inner">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+        <div class="photo-float-badge">
+          <i class="fas fa-chart-pie" style="color:var(--accent-warm);"></i>
+          Data Analyst
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-label"> Who I Am</div>
+    <div class="section-title reveal visible">The Story Behind the Data</div>
+    <div class="about-grid">
+      <div class="about-card reveal visible">
+        <p>I'm a <strong>Data Analyst and Business Intelligence Specialist</strong> with a rare combination of deep tech skills and hands-on business experience in the tourism and B2B sectors. I don't just clean datasets — I understand the operational context behind them, which makes my insights actionable rather than just accurate.</p>
+        <p>My career spans <strong>global supplier management, international B2B sales (UAE &amp; Saudi Arabia), team leadership, and operational excellence</strong>. I've built client databases from scratch, resolved complex supplier issues under pressure, and trained teams to deliver consistent service standards — all while developing a sharp eye for patterns and performance metrics.</p>
+        <p>Today, I'm channeling that experience into data-driven roles — currently expanding into <strong>data engineering</strong>, sharpening my Python and SQL skills, and learning German (A1) as I set my sights on broader international opportunities.</p>
+      </div>
+      <div class="chips-grid reveal visible" style="transition-delay:0.15s;">
+        <div class="chip"><span class="chip-icon"><i class="fas fa-map-marker-alt"></i></span> Tanta, Gharbia, Egypt</div>
+        <div class="chip"><span class="chip-icon"><i class="fas fa-graduation-cap"></i></span> CS, Tanta University</div>
+        <div class="chip"><span class="chip-icon"><i class="fas fa-chart-bar"></i></span> Data Analytics &amp; BI</div>
+        <div class="chip"><span class="chip-icon"><i class="fas fa-handshake"></i></span> B2B Sales Expert</div>
+        <div class="chip"><span class="chip-icon"><i class="fas fa-globe"></i></span> International Exp.</div>
+        <div class="chip"><span class="chip-icon"><i class="fas fa-users"></i></span> Team Leader</div>
+        <div class="chip"><span class="chip-icon"><i class="fas fa-code"></i></span> Python &amp; SQL</div>
+        <div class="chip"><span class="chip-icon"><i class="fas fa-cogs"></i></span> Operations Expert</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="container">
+    <div class="section-label"> Where I've Been</div>
+    <div class="section-title reveal visible">Professional Journey</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-card reveal visible">
+          <div class="tc-header">
+            <div>
+              <div class="tc-company">GTG Booking.com</div>
+              <div class="tc-period">Aug 2024 – Oct 2025 · Tanta, Egypt</div>
+            </div>
+            <span class="badge badge-green">On-Site</span>
+          </div>
+          <div class="role-block">
+            <div class="role-title">Sales — UAE &amp; Saudi Arabia</div>
+            <ul class="role-list">
+              <li>Opened and built new B2B client relationships in Dubai and Saudi Arabia, expanding regional market presence.</li>
+              <li>Introduced the company's online booking system to potential partners, driving adoption and digital engagement.</li>
+              <li>Built long-term trust and generated a solid, growing client database through consistent follow-up and relationship management.</li>
+            </ul>
+          </div>
+          <div class="role-divider"></div>
+          <div class="role-block">
+            <div class="role-title">Account Manager</div>
+            <ul class="role-list">
+              <li>Managed all client account aspects including hotel bookings, amendments, and after-sales support.</li>
+              <li>Served as the primary point of contact for key clients, ensuring satisfaction and retention.</li>
+            </ul>
+          </div>
+          <div class="role-divider"></div>
+          <div class="role-block">
+            <div class="role-title">Operations Executive</div>
+            <ul class="role-list">
+              <li>Oversaw all operational matters for B2B clients in Egypt and globally, ensuring seamless service delivery.</li>
+              <li>Managed global supplier relationships and resolved complex issues swiftly to minimize client impact.</li>
+              <li>Created structured follow-up plans that improved service quality and strengthened supplier collaboration.</li>
+              <li>Led and trained a team of three, ensuring consistent service standards and operational excellence.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-card reveal visible" style="transition-delay:0.1s;">
+          <div class="tc-header">
+            <div>
+              <div class="tc-company">Elevvo</div>
+              <div class="tc-period">Oct 2025 · Remote</div>
+            </div>
+            <span class="badge badge-blue">Remote</span>
+          </div>
+          <div class="role-block">
+            <div class="role-title">Data Analytics Intern</div>
+            <ul class="role-list">
+              <li>Performed end-to-end data cleaning, exploratory data analysis, and visualization using Pandas, Matplotlib, and Seaborn.</li>
+              <li>Built Excel dashboards with pivot tables and KPIs to track and communicate sales performance metrics.</li>
+              <li>Used SQL queries to analyze relational databases and answer targeted business questions with precision.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-label"> What I've Built</div>
+    <div class="section-title reveal visible">Dashboard Projects</div>
+    <div class="dashboard-grid">
+      <div class="dash-card reveal visible">
+        <div class="dash-title">Strategic Dashboard</div>
+        <div class="dash-purpose-label">Purpose</div>
+        <div class="dash-purpose-text">Track overall business performance and long-term goals.</div>
+        <div class="dash-divider"></div>
+        <div class="dash-section-label">What's in it</div>
+        <ul class="dash-content-list">
+          <li>Long-term KPIs such as revenue growth and profit margins</li>
+          <li>Customer trends and market share analysis</li>
+          <li>Performance targets and strategic milestones</li>
+        </ul>
+        <div class="dash-audience">
+          <span class="dash-audience-label">Best for</span>
+          <span class="dash-audience-text">CEO, founders, senior executives</span>
+        </div>
+      </div>
+      <div class="dash-card reveal visible" style="transition-delay:0.1s;">
+        <div class="dash-title">Tactical Dashboard</div>
+        <div class="dash-purpose-label">Purpose</div>
+        <div class="dash-purpose-text">Monitor department performance and short-term progress.</div>
+        <div class="dash-divider"></div>
+        <div class="dash-section-label">What's in it</div>
+        <ul class="dash-content-list">
+          <li>Team KPIs and monthly performance results</li>
+          <li>Target vs. actual comparison views</li>
+          <li>Campaign performance and productivity metrics</li>
+        </ul>
+        <div class="dash-audience">
+          <span class="dash-audience-label">Best for</span>
+          <span class="dash-audience-text">Department managers, team leaders, sales managers</span>
+        </div>
+      </div>
+      <div class="dash-card reveal visible" style="transition-delay:0.15s;">
+        <div class="dash-title">Operational Dashboard</div>
+        <div class="dash-purpose-label">Purpose</div>
+        <div class="dash-purpose-text">Track daily operations and real-time activity.</div>
+        <div class="dash-divider"></div>
+        <div class="dash-section-label">What's in it</div>
+        <ul class="dash-content-list">
+          <li>Daily sales figures and system activity logs</li>
+          <li>Support tickets and order status tracking</li>
+          <li>Inventory levels and operational throughput</li>
+        </ul>
+        <div class="dash-audience">
+          <span class="dash-audience-label">Best for</span>
+          <span class="dash-audience-text">Operations team, support team, sales team, supervisors</span>
+        </div>
+      </div>
+      <div class="dash-card reveal visible" style="transition-delay:0.2s;">
+        <div class="dash-title">Analytical Dashboard</div>
+        <div class="dash-purpose-label">Purpose</div>
+        <div class="dash-purpose-text">Explore data deeply to find patterns and insights.</div>
+        <div class="dash-divider"></div>
+        <div class="dash-section-label">What's in it</div>
+        <ul class="dash-content-list">
+          <li>Trend analysis and drill-down reports</li>
+          <li>Historical comparisons and performance breakdowns</li>
+          <li>Interactive filters and pattern detection views</li>
+        </ul>
+        <div class="dash-audience">
+          <span class="dash-audience-label">Best for</span>
+          <span class="dash-audience-text">Data analysts, business analysts, strategy team</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-label"> My Toolkit</div>
+    <div class="section-title reveal visible">Skills &amp; Expertise</div>
+    <div class="skills-layout">
+      <div class="skill-card-wide reveal visible">
+        <div class="skill-card-header">
+          <div class="skill-card-icon"><i class="fas fa-laptop-code"></i></div>
+          <div class="skill-card-title">Technical Skills</div>
+        </div>
+        <div class="skill-bars-grid">
+          <div class="skill-bar-item">
+            <div class="skill-bar-top"><span>Excel &amp; Google Sheets</span><span class="pct">85%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top"><span>Python (Pandas, Matplotlib, Seaborn)</span><span class="pct">80%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top"><span>SQL &amp; SQL Server</span><span class="pct">78%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="78"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top"><span>Power BI</span><span class="pct">75%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="75"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top"><span>Tableau</span><span class="pct">65%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="65"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-top"><span>Git &amp; GitHub</span><span class="pct">70%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="70"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="skill-card reveal visible" style="transition-delay:0.1s;">
+        <div class="skill-card-header">
+          <div class="skill-card-icon"><i class="fas fa-plane"></i></div>
+          <div class="skill-card-title">Domain Expertise</div>
+        </div>
+        <div class="tag-cloud">
+          <span class="tag">Airline Booking (NDC)</span>
+          <span class="tag">Hotel Booking Systems (B2B)</span>
+          <span class="tag">Supplier Performance Monitoring</span>
+          <span class="tag">B2C &amp; B2B Travel Services</span>
+          <span class="tag">Operations Management</span>
+          <span class="tag">Global Supplier Relations</span>
+          <span class="tag">After-Sales Support</span>
+        </div>
+      </div>
+      <div class="skill-card reveal visible" style="transition-delay:0.15s;">
+        <div class="skill-card-header">
+          <div class="skill-card-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="skill-card-title">Analytics Methods</div>
+        </div>
+        <div class="tag-cloud">
+          <span class="tag">Exploratory Data Analysis</span>
+          <span class="tag">Data Cleaning &amp; Wrangling</span>
+          <span class="tag">Statistical Analysis</span>
+          <span class="tag">Dashboard Design</span>
+          <span class="tag">Data Warehousing</span>
+          <span class="tag">Pivot Tables &amp; KPIs</span>
+          <span class="tag">Web Scraping</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="container">
+    <div class="section-label"> My Journey</div>
+    <div class="section-title reveal visible">Education &amp; Certifications</div>
+    <div class="edu-grid">
+      <div class="edu-card reveal visible">
+        <div class="edu-icon-box"><i class="fas fa-graduation-cap"></i></div>
+        <div class="edu-degree">Bachelor of Computers &amp; Informatics</div>
+        <div class="edu-inst">Tanta University — CS Department</div>
+        <div class="edu-period">2022 – 2026</div>
+      </div>
+      <div class="edu-card reveal visible" style="transition-delay:0.1s;">
+        <div class="edu-icon-box"><i class="fas fa-chart-bar"></i></div>
+        <div class="edu-degree">Data Analytics with Professional Development</div>
+        <div class="edu-inst">ALX (African Leadership Experience)</div>
+        <div class="edu-period">Jan – Aug 2025</div>
+        <ul class="edu-bullets">
+          <li>Google Sheets, SQL, Power BI</li>
+          <li>SMART goals, teamwork, time management</li>
+          <li>Group data analytics projects</li>
+        </ul>
+      </div>
+      <div class="edu-card reveal visible" style="transition-delay:0.15s;">
+        <div class="edu-icon-box"><i class="fas fa-robot"></i></div>
+        <div class="edu-degree">AI Starter Kit</div>
+        <div class="edu-inst">ALX</div>
+        <div class="edu-period">Jan – Mar 2025</div>
+        <ul class="edu-bullets">
+          <li>AI tools for content creation &amp; design</li>
+          <li>NotebookLM, text summarization, digital projects</li>
+        </ul>
+      </div>
+      <div class="edu-card reveal visible" style="transition-delay:0.2s;">
+        <div class="edu-icon-box"><i class="fas fa-lightbulb"></i></div>
+        <div class="edu-degree">Business Intelligence</div>
+        <div class="edu-inst">ITI</div>
+        <div class="edu-period">Sep – Oct 2025</div>
+        <ul class="edu-bullets">
+          <li>Excel, SQL Server, Power BI, Tableau</li>
+          <li>Data Warehousing &amp; Statistics</li>
+        </ul>
+      </div>
+      <div class="edu-card reveal visible" style="transition-delay:0.25s;">
+        <div class="edu-icon-box"><i class="fab fa-git-alt"></i></div>
+        <div class="edu-degree">Git &amp; GitHub</div>
+        <div class="edu-inst">DataCamp</div>
+        <div class="edu-period">Dec 2025</div>
+        <ul class="edu-bullets">
+          <li>Version control, branching, merging, pull requests</li>
+        </ul>
+      </div>
+    </div>
+    <div class="reveal visible">
+      <div class="lang-row">
+        <div class="lang-item">
+          <div class="lang-flag">🇪🇬</div>
+          <div><div class="lang-name">Arabic</div><div class="lang-level">Native</div></div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-flag">🇬🇧</div>
+          <div><div class="lang-name">English</div><div class="lang-level">Very Good</div></div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-flag">🇩🇪</div>
+          <div><div class="lang-name">German</div><div class="lang-level">A1 (In Progress)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Let's Connect</div>
+    <div class="contact-grid">
+      <div class="reveal visible">
+        <h2 class="contact-heading">Let's work <span>together.</span></h2>
+        <p class="contact-sub">Whether you're looking for a data-driven team member, have a project that needs analytical depth, or simply want to exchange ideas — I'm always open to meaningful conversations. Let's build something valuable.</p>
+        <div class="contact-info-cards">
+          <a href="mailto:tinamaro2004@gmail.com" class="contact-info-card">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <span>tinamaro2004@gmail.com</span>
+          </a>
+          <a href="tel:+201288558758" class="contact-info-card">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <span>+20 128 855 8758</span>
+          </a>
+          <a href="https://linkedin.com/in/martina-amir-data" target="_blank" class="contact-info-card">
+            <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+            <span>linkedin.com/in/martina-amir-data</span>
+          </a>
+          <div class="contact-info-card" style="cursor:default;">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <span>Tanta, Gharbia, Egypt</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal visible" style="transition-delay:0.15s;">
+        <form class="contact-form" onsubmit="handleForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="fname">Name</label>
+              <input type="text" id="fname" placeholder="Your name" required="">
+            </div>
+            <div class="form-field">
+              <label for="femail">Email</label>
+              <input type="email" id="femail" placeholder="your@email.com" required="">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="fsubject">Subject</label>
+            <input type="text" id="fsubject" placeholder="What's this about?" required="">
+          </div>
+          <div class="form-field">
+            <label for="fmessage">Message</label>
+            <textarea id="fmessage" placeholder="Tell me about your project or opportunity..." required=""></textarea>
+          </div>
+          <button type="submit" class="btn-send">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+          <p id="form-success" style="display:none;color:#16a34a;font-size:0.9rem;text-align:center;margin-top:0.5rem;font-weight:700;">
+            Message sent — I'll get back to you soon.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <a href="#hero" class="footer-logo">Martina.</a>
+    <p class="footer-copy">© 2025 Martina Amir Gerges · Built with passion &amp; data</p>
+    <div class="social-links">
+      <a href="https://linkedin.com/in/martina-amir-data" target="_blank" class="social-link" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a href="https://github.com/username" target="_blank" class="social-link" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="mailto:tinamaro2004@gmail.com" class="social-link" aria-label="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const glow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', (e) => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+  document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { glow.style.opacity = '1'; });
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 30); });
+  const sections = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a[href^="#"]');
+  function setActive() {
+    let found = '';
+    sections.forEach(sec => { const top = sec.getBoundingClientRect().top; if (top < 120) found = '#' + sec.id; });
+    navAs.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === found); });
+  }
+  window.addEventListener('scroll', setActive, { passive: true });
+  const navToggle = document.getElementById('navToggle');
+  const navLinks  = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    const icon = navToggle.querySelector('i');
+    icon.className = navLinks.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+  });
+  navLinks.querySelectorAll('a').forEach(a => { a.addEventListener('click', () => { navLinks.classList.remove('open'); navToggle.querySelector('i').className = 'fas fa-bars'; }); });
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+  const barFills = document.querySelectorAll('.bar-fill');
+  let barsAnimated = false;
+  const skillsSection = document.getElementById('skills');
+  const barObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !barsAnimated) {
+        barsAnimated = true;
+        barFills.forEach((bar, i) => { setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, i * 150); });
+      }
+    });
+  }, { threshold: 0.2 });
+  if (skillsSection) barObs.observe(skillsSection);
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-send');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    setTimeout(() => { document.getElementById('form-success').style.display = 'block'; e.target.reset(); btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message'; btn.disabled = false; }, 1200);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body></html>
