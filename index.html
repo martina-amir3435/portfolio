@@ -647,32 +647,43 @@
         </div>
       </div>
       <div class="reveal visible" style="transition-delay:0.15s;">
-        <form class="contact-form" onsubmit="handleForm(event)">
-          <div class="form-row">
-            <div class="form-field">
-              <label for="fname">Name</label>
-              <input type="text" id="fname" placeholder="Your name" required="">
-            </div>
-            <div class="form-field">
-              <label for="femail">Email</label>
-              <input type="email" id="femail" placeholder="your@email.com" required="">
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="fsubject">Subject</label>
-            <input type="text" id="fsubject" placeholder="What's this about?" required="">
-          </div>
-          <div class="form-field">
-            <label for="fmessage">Message</label>
-            <textarea id="fmessage" placeholder="Tell me about your project or opportunity..." required=""></textarea>
-          </div>
-          <button type="submit" class="btn-send">
-            <i class="fas fa-paper-plane"></i> Send Message
-          </button>
-          <p id="form-success" style="display:none;color:#16a34a;font-size:0.9rem;text-align:center;margin-top:0.5rem;font-weight:700;">
-            Message sent — I'll get back to you soon.
-          </p>
-        </form>
+        <form class="contact-form"
+      action="https://formspree.io/f/xkoqzonl"
+      method="POST">
+
+  <div class="form-row">
+    <div class="form-field">
+      <label for="fname">Name</label>
+      <input type="text" name="name" id="fname" placeholder="Your name" required>
+    </div>
+
+    <div class="form-field">
+      <label for="femail">Email</label>
+      <input type="email" name="email" id="femail" placeholder="your@email.com" required>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="fsubject">Subject</label>
+    <input type="text" name="subject" id="fsubject" placeholder="What's this about?" required>
+  </div>
+
+  <div class="form-field">
+    <label for="fmessage">Message</label>
+    <textarea name="message" id="fmessage"
+      placeholder="Tell me about your project or opportunity..." required></textarea>
+  </div>
+
+  <button type="submit" class="btn-send">
+    <i class="fas fa-paper-plane"></i> Send Message
+  </button>
+
+  <p id="form-success"
+     style="display:none;color:#16a34a;font-size:0.9rem;text-align:center;margin-top:0.5rem;font-weight:700;">
+     Message sent — I'll get back to you soon.
+  </p>
+
+</form>
       </div>
     </div>
   </div>
