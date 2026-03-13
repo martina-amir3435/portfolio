@@ -647,9 +647,7 @@
         </div>
       </div>
       <div class="reveal visible" style="transition-delay:0.15s;">
-       <form class="contact-form"
-      action="https://formspree.io/f/xkoqzonl"
-      method="POST">
+     <form class="contact-form" id="contact-form">
 
   <div class="form-row">
     <div class="form-field">
@@ -675,8 +673,13 @@
   </div>
 
   <button type="submit" class="btn-send">
-   Thank you! Your message has been sent.
+    Send Message
   </button>
+
+  <p id="form-success"
+     style="display:none;color:#16a34a;font-size:0.9rem;text-align:center;margin-top:0.5rem;font-weight:700;">
+     Message sent — I'll get back to you soon.
+  </p>
 
 </form>
       </div>
@@ -753,7 +756,31 @@
     });
   });
 </script>
+<script>
+const form = document.getElementById("contact-form");
+const successMsg = document.getElementById("form-success");
 
+form.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const data = new FormData(form);
+
+  const response = await fetch("https://formspree.io/f/xkoqzonl", {
+    method: "POST",
+    body: data,
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
+
+  if (response.ok) {
+    successMsg.style.display = "block";
+    form.reset();
+  } else {
+    alert("Something went wrong. Please try again.");
+  }
+});
+</script>
 </body></html>
 
 
